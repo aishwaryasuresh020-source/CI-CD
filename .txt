@@ -1,4 +1,4 @@
- 1. GIT CHEATSHEET (Basics)
+ 1. GIT
 - Setup
 git config --global user.name "Your Name"
 git config --global user.email "your@email.com"

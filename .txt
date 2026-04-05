@@ -1,0 +1,19 @@
+ 1. GIT CHEATSHEET (Basics)
+- Setup
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+- Create Repo
+git init
+- Clone Repo
+git clone <repo_url>
+- Basic Workflow
+git status
+git add .
+git commit -m "message"
+git push origin main
+- Pull Latest Code
+git pull origin main
+- Branching
+git branch new-branch
+git checkout new-branch
+git checkout main

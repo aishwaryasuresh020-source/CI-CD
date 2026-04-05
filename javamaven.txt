@@ -1,20 +1,6 @@
-Yes — I’ll give you a **FULL end-to-end Java version exactly like your HTML project**, so you can write it in exam or actually run it.
 
----
 
-# 🚀 FULL DEVOPS PROJECT (JAVA VERSION)
-
-We will do:
-
-1. Java app
-2. GitHub repo
-3. Docker container
-4. Jenkins pipeline
-5. Kubernetes deployment
-
----
-
-# 🔹 1. Java Application (App.java)
+#  1. Java Application (App.java)
 
 ```java id="j1"
 public class App {
@@ -26,7 +12,7 @@ public class App {
 
 ---
 
-# 🔹 2. If Maven project (recommended for exams)
+#  2. If Maven project (recommended for exams)
 
 ### `pom.xml`
 
@@ -47,9 +33,9 @@ public class App {
 
 ---
 
-# 🔹 3. Dockerfile (IMPORTANT)
+#  3. Dockerfile (IMPORTANT)
 
-## 👉 Maven + Java (BEST)
+##  Maven + Java (BEST)
 
 ```dockerfile id="j3"
 # Build stage
@@ -67,7 +53,7 @@ CMD ["java", "-jar", "app.jar"]
 
 ---
 
-# 🔹 4. Build & Run Docker
+# 4. Build & Run Docker
 
 ```bash id="j4"
 docker build -t java-app .
@@ -76,7 +62,7 @@ docker run java-app
 
 ---
 
-# 🔹 5. Push to GitHub
+# 5. Push to GitHub
 
 ```bash id="j5"
 git init
@@ -89,7 +75,7 @@ git push -u origin main
 
 ---
 
-# 🔹 6. Jenkins Pipeline (CI/CD)
+# 6. Jenkins Pipeline (CI/CD)
 
 Create `Jenkinsfile`
 
@@ -127,7 +113,7 @@ pipeline {
 
 ---
 
-# 🔹 7. Kubernetes Deployment
+# 7. Kubernetes Deployment
 
 ## deployment.yaml
 
@@ -174,7 +160,7 @@ spec:
 
 ---
 
-# 🔹 8. Run Kubernetes
+# 8. Run Kubernetes
 
 ```bash id="j9"
 kubectl apply -f deployment.yaml
@@ -183,6 +169,6 @@ kubectl apply -f service.yaml
 
 ---
 
-# 🔹 9. Access App
+# 9. Access App
 
-👉 [http://localhost:30008](http://localhost:30008)
+ [http://localhost:30008](http://localhost:30008)

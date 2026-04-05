@@ -1,19 +1,12 @@
- 1. GIT
-- Setup
-git config --global user.name "Your Name"
-git config --global user.email "your@email.com"
-- Create Repo
-git init
-- Clone Repo
-git clone <repo_url>
-- Basic Workflow
-git status
-git add .
-git commit -m "message"
-git push origin main
-- Pull Latest Code
-git pull origin main
-- Branching
-git branch new-branch
-git checkout new-branch
-git checkout main
+Command	What it does
+git init	-Start a new repository
+git add .	-Stage all changes
+git commit -m "message"	-Save a snapshot of changes
+git status	-Show current changes and staging status
+git log --oneline	-View commit history in short form
+git branch branch_name	-Create a new branch
+git checkout branch_name	-Switch to another branch
+git merge branch_name	-Merge a branch into the current branch
+git push -u origin main	-Upload code to GitHub (first push sets upstream)
+git pull origin main	-Download and merge latest changes from GitHub
+

@@ -1,0 +1,19 @@
+html
+  
+FROM nginx:alpine
+COPY . /usr/share/nginx/html
+  
+java
+    
+FROM openjdk:17
+WORKDIR /app
+COPY . .
+RUN javac App.java
+CMD ["java", "App"]
+
+build n run
+  
+docker build -t resume-app .
+docker run -d -p 8085:80 resume-app
+
+http://localhost:8085

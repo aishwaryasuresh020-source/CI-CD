@@ -1,28 +1,3 @@
-Here’s a clean **step-by-step Agile Lab solution plan** for your problem statement.
-
----
-
-# 📌 Agile Lab: Contact Management System
-
-## 🧩 Problem Statement
-
-Ensure contacts are stored and retrieved accurately.
-
----
-
-# 🏗️ 1. Project Overview
-
-You will build a **Spring Boot Microservice** that:
-
-* Creates contacts
-* Reads contacts
-* Updates contacts
-* Deletes contacts
-* Has JUnit tests
-* Runs CI/CD pipeline
-* Deploys using Docker + Kubernetes
-
----
 
 # 📁 2. Project Structure
 
@@ -44,9 +19,9 @@ contact-service/
 
 ---
 
-# 🧱 3. CRUD Logic
+#  3. CRUD Logic
 
-## 📌 Model: Contact.java
+##  Model: Contact.java
 
 ```java
 package com.example.contact.model;
@@ -70,7 +45,7 @@ public class Contact {
 
 ---
 
-## 📌 Repository
+##  Repository
 
 ```java
 package com.example.contact.repository;
@@ -84,7 +59,7 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
 
 ---
 
-## 📌 Service Layer
+##  Service Layer
 
 ```java
 package com.example.contact.service;
@@ -135,7 +110,7 @@ public class ContactService {
 
 ---
 
-## 📌 Controller
+##  Controller
 
 ```java
 package com.example.contact.controller;
@@ -186,9 +161,9 @@ public class ContactController {
 
 ---
 
-# 🧪 4. JUnit Test Cases
+#  4. JUnit Test Cases
 
-## 📌 Service Test
+##  Service Test
 
 ```java
 package com.example.contact;
@@ -236,9 +211,9 @@ public class ContactServiceTests {
 
 ---
 
-# 🚀 5. Docker Setup
+#  5. Docker Setup
 
-## 📌 Dockerfile
+##  Dockerfile
 
 ```dockerfile
 FROM openjdk:17
@@ -260,9 +235,9 @@ docker run -p 8080:8080 contact-service
 
 ---
 
-# ⚙️ 6. CI/CD Pipeline (Jenkins)
+#  6. CI/CD Pipeline (Jenkins)
 
-## 📌 Jenkinsfile
+##  Jenkinsfile
 
 ```groovy
 pipeline {
@@ -298,9 +273,9 @@ pipeline {
 
 ---
 
-# ☸️ 7. Kubernetes Deployment
+#  7. Kubernetes Deployment
 
-## 📌 kubernetes.yaml
+##  kubernetes.yaml
 
 ```yaml
 apiVersion: apps/v1
@@ -336,22 +311,3 @@ spec:
       targetPort: 8080
       nodePort: 30001
 ```
-
----
-
-# 🎯 Final Flow
-
-```
-Developer → GitHub → Jenkins CI → Maven Build → Tests → Docker Image → Kubernetes Deploy → Running Service
-```
-
----
-
-# ✅ If you want next step, I can also give:
-
-* Postman API testing collection
-* Full GitHub repo structure ready to upload
-* Simple viva questions & answers
-* Short “exam writing version” (very important for labs)
-
-Just tell 👍

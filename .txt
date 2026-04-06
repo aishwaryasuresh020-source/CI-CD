@@ -1,0 +1,357 @@
+Here’s a clean **step-by-step Agile Lab solution plan** for your problem statement.
+
+---
+
+# 📌 Agile Lab: Contact Management System
+
+## 🧩 Problem Statement
+
+Ensure contacts are stored and retrieved accurately.
+
+---
+
+# 🏗️ 1. Project Overview
+
+You will build a **Spring Boot Microservice** that:
+
+* Creates contacts
+* Reads contacts
+* Updates contacts
+* Deletes contacts
+* Has JUnit tests
+* Runs CI/CD pipeline
+* Deploys using Docker + Kubernetes
+
+---
+
+# 📁 2. Project Structure
+
+```
+contact-service/
+├── src/
+│   ├── main/java/com/example/contact/
+│   │   ├── controller/
+│   │   ├── service/
+│   │   ├── repository/
+│   │   ├── model/
+│   │   └── ContactServiceApplication.java
+│   └── test/java/com/example/contact/
+│       └── ContactServiceTests.java
+├── pom.xml
+├── Dockerfile
+└── kubernetes.yaml
+```
+
+---
+
+# 🧱 3. CRUD Logic
+
+## 📌 Model: Contact.java
+
+```java
+package com.example.contact.model;
+
+import jakarta.persistence.*;
+
+@Entity
+public class Contact {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private String phone;
+    private String email;
+
+    // getters and setters
+}
+```
+
+---
+
+## 📌 Repository
+
+```java
+package com.example.contact.repository;
+
+import com.example.contact.model.Contact;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ContactRepository extends JpaRepository<Contact, Long> {
+}
+```
+
+---
+
+## 📌 Service Layer
+
+```java
+package com.example.contact.service;
+
+import com.example.contact.model.Contact;
+import com.example.contact.repository.ContactRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ContactService {
+
+    private final ContactRepository repo;
+
+    public ContactService(ContactRepository repo) {
+        this.repo = repo;
+    }
+
+    public Contact create(Contact c) {
+        return repo.save(c);
+    }
+
+    public List<Contact> getAll() {
+        return repo.findAll();
+    }
+
+    public Contact getById(Long id) {
+        return repo.findById(id).orElse(null);
+    }
+
+    public Contact update(Long id, Contact newContact) {
+        Contact c = repo.findById(id).orElse(null);
+        if (c != null) {
+            c.setName(newContact.getName());
+            c.setPhone(newContact.getPhone());
+            c.setEmail(newContact.getEmail());
+            return repo.save(c);
+        }
+        return null;
+    }
+
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
+}
+```
+
+---
+
+## 📌 Controller
+
+```java
+package com.example.contact.controller;
+
+import com.example.contact.model.Contact;
+import com.example.contact.service.ContactService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/contacts")
+public class ContactController {
+
+    private final ContactService service;
+
+    public ContactController(ContactService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public Contact create(@RequestBody Contact c) {
+        return service.create(c);
+    }
+
+    @GetMapping
+    public List<Contact> getAll() {
+        return service.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public Contact getById(@PathVariable Long id) {
+        return service.getById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Contact update(@PathVariable Long id, @RequestBody Contact c) {
+        return service.update(id, c);
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id) {
+        service.delete(id);
+        return "Deleted successfully";
+    }
+}
+```
+
+---
+
+# 🧪 4. JUnit Test Cases
+
+## 📌 Service Test
+
+```java
+package com.example.contact;
+
+import com.example.contact.model.Contact;
+import com.example.contact.repository.ContactRepository;
+import com.example.contact.service.ContactService;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ContactServiceTests {
+
+    ContactRepository repo = Mockito.mock(ContactRepository.class);
+    ContactService service = new ContactService(repo);
+
+    @Test
+    void testCreateContact() {
+        Contact c = new Contact();
+        c.setName("John");
+
+        Mockito.when(repo.save(c)).thenReturn(c);
+
+        Contact result = service.create(c);
+
+        assertEquals("John", result.getName());
+    }
+
+    @Test
+    void testGetById() {
+        Contact c = new Contact();
+        c.setName("Sam");
+
+        Mockito.when(repo.findById(1L)).thenReturn(Optional.of(c));
+
+        Contact result = service.getById(1L);
+
+        assertEquals("Sam", result.getName());
+    }
+}
+```
+
+---
+
+# 🚀 5. Docker Setup
+
+## 📌 Dockerfile
+
+```dockerfile
+FROM openjdk:17
+WORKDIR /app
+COPY target/contact-service.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+---
+
+## Build & Run
+
+```bash
+mvn clean package
+docker build -t contact-service .
+docker run -p 8080:8080 contact-service
+```
+
+---
+
+# ⚙️ 6. CI/CD Pipeline (Jenkins)
+
+## 📌 Jenkinsfile
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t contact-service .'
+            }
+        }
+
+        stage('Run') {
+            steps {
+                sh 'docker run -d -p 8080:8080 contact-service'
+            }
+        }
+    }
+}
+```
+
+---
+
+# ☸️ 7. Kubernetes Deployment
+
+## 📌 kubernetes.yaml
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contact-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: contact-service
+  template:
+    metadata:
+      labels:
+        app: contact-service
+    spec:
+      containers:
+        - name: contact-service
+          image: contact-service:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: contact-service
+spec:
+  type: NodePort
+  selector:
+    app: contact-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30001
+```
+
+---
+
+# 🎯 Final Flow
+
+```
+Developer → GitHub → Jenkins CI → Maven Build → Tests → Docker Image → Kubernetes Deploy → Running Service
+```
+
+---
+
+# ✅ If you want next step, I can also give:
+
+* Postman API testing collection
+* Full GitHub repo structure ready to upload
+* Simple viva questions & answers
+* Short “exam writing version” (very important for labs)
+
+Just tell 👍

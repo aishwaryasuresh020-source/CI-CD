@@ -1,5 +1,5 @@
 
-# 📁 2. Project Structure
+#  2. Project Structure
 
 ```
 contact-service/
